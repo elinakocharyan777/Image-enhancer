@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML-модель для улучшения изображений</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="hero">
+        <h1>ML-модель для улучшения изображений</h1>
+
+        <div class="format-note">
+          <span>Поддерживаемые форматы:</span>
+          <strong>JPG</strong>
+          <strong>PNG</strong>
+          <strong>BMP</strong>
+          <strong>HEIC</strong>
+        </div>
+      </header>
+
+      <div class="upload-block">
+        
+
+        <input
+          id="imageInput"
+          type="file"
+          accept=".jpg,.jpeg,.png,.bmp,.heic,.heif,image/jpeg,image/png,image/bmp,image/heic,image/heif"
+        />
+
+        <div class="action-buttons">
+          <button id="processButton" class="hidden" disabled>
+            Повторить автоматическое улучшение
+          </button>
+
+          <button id="cancelButton" class="hidden" disabled>
+            Прервать обработку
+          </button>
+
+          
+        </div>
+      </div>
+
+      <div id="statusBlock" class="status-block hidden">
+        <p id="statusText">Статус: изображение не выбрано</p>
+
+        <div class="progress-wrapper">
+          <progress id="progressBar" value="0" max="100"></progress>
+          <span id="progressText">0%</span>
+        </div>
+      </div>
+
+      <div id="taskInfoBlock" class="task-info hidden">
+        <div class="task-info-header">
+          <h3>Информация о задаче</h3>
+        </div>
+
+        <div id="taskInfoText" class="task-info-grid">
+          <div class="info-empty">Задача пока не создана.</div>
+        </div>
+      </div>
+
+      <div id="manualControls" class="manual-controls hidden">
+        <div class="manual-controls-header">
+          <div>
+            <h3>Ручная донастройка результата</h3>
+          </div>
+
+          <button id="resetAdjustmentsButton" class="reset-button" type="button">
+            Сбросить настройки
+          </button>
+        </div>
+
+        <div class="sliders-grid">
+          <label class="slider-card" for="brightnessSlider">
+            <div class="slider-top">
+              <span>Яркость</span>
+              <output id="brightnessValue">0</output>
+            </div>
+
+            <input
+              id="brightnessSlider"
+              type="range"
+              min="-60"
+              max="60"
+              step="1"
+              value="0"
+            />
+          </label>
+
+          <label class="slider-card" for="contrastSlider">
+            <div class="slider-top">
+              <span>Контрастность</span>
+              <output id="contrastValue">100%</output>
+            </div>
+
+            <input
+              id="contrastSlider"
+              type="range"
+              min="50"
+              max="150"
+              step="1"
+              value="100"
+            />
+          </label>
+
+          <label class="slider-card" for="saturationSlider">
+            <div class="slider-top">
+              <span>Насыщенность</span>
+              <output id="saturationValue">100%</output>
+            </div>
+
+            <input
+              id="saturationSlider"
+              type="range"
+              min="50"
+              max="150"
+              step="1"
+              value="100"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div class="preview-grid">
+        <div class="preview-card">
+          <div class="preview-card-header">
+            <h2>Исходное изображение</h2>
+            <label for="imageInput" class="upload-button">
+              Выбрать изображение
+            </label>
+            <span class="compare-label compare-before">До</span>
+          </div>
+
+          <div class="image-box clickable-drop-zone" id="dropZone">
+            <div id="sourcePlaceholder" class="image-placeholder">
+
+              <div class="placeholder-icon">
+                  🖼️
+              </div>
+          
+              <div class="placeholder-title">
+                  Перетащите изображение сюда
+              </div>
+          
+              <div class="placeholder-subtitle">
+                  или нажмите для выбора файла
+              </div>
+          
+              <div class="placeholder-formats">
+                  JPG • PNG • BMP • HEIC
+              </div>
+          
+          </div>
+
+            <img id="sourceImage" class="hidden" alt="Исходное изображение" />
+          </div>
+        </div>
+
+        <div class="preview-card">
+          <div class="preview-card-header">
+            <h2>Результат обработки</h2>
+            <a id="downloadButton" class="download-button hidden" download="enhanced-image.png">
+              ⬇ Скачать результат
+            </a>
+            <span class="compare-label compare-after">После</span>
+          </div>
+
+          <div class="image-box">
+            <div id="resultPlaceholder" class="image-placeholder">
+              Результат появится после обработки
+            </div>
+
+            <div id="processingOverlay" class="processing-overlay hidden">
+              <div class="loader"></div>
+              <p>Обработка изображения…</p>
+            </div>
+
+            <img id="resultImage" class="hidden" alt="Результат обработки" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
